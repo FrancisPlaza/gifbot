@@ -5,7 +5,7 @@ require 'json'
 require 'net/http'
 require 'sinatra'
 
-SLACK_TOKEN="..."
+SLACK_TOKEN="RwxeTfyhVQ059T0rUzVLNhSs"
 GIPHY_KEY="dc6zaTOxFJmzC"
 TRIGGER_WORD="#"
 IMAGE_STYLE="fixed_height" # or "fixed_width" or "original"
@@ -19,7 +19,7 @@ post "/gif" do
   # $stderr.puts "querying giphy: #{url}"
   resp = Net::HTTP.get_response(URI.parse(url))
   buffer = resp.body
-  result = JSON.parse(buffer) 
+  result = JSON.parse(buffer)
   images = result["data"].map {|item| item["images"]}
   # filter out images > 2MB(?) because Slack
   images.select! {|image| image["original"]["size"].to_i < 1<<21}
