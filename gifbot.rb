@@ -11,6 +11,8 @@ TRIGGER_WORD="#"
 IMAGE_STYLE="fixed_height" # or "fixed_width" or "original"
 
 post "/gif" do
+  puts request.inspect
+  puts request["token"]
   return 401 unless request["token"] == SLACK_TOKEN
   q = request["text"]
   return 200 unless q.start_with? TRIGGER_WORD
@@ -29,6 +31,7 @@ post "/gif" do
     selected = images[rand images.size]
     text = "<" + selected[IMAGE_STYLE]["url"] + ">"
   end
-  reply = {username: "giphy", icon_emoji: ":monkey_face:", text: text}
+  reply = {text: text}
+  puts reply
   return JSON.generate(reply)
 end
