@@ -7,7 +7,7 @@ require 'sinatra'
 
 SLACK_TOKEN="RwxeTfyhVQ059T0rUzVLNhSs"
 GIPHY_KEY="dc6zaTOxFJmzC"
-TRIGGER_WORD="#"
+# TRIGGER_WORD="#"
 IMAGE_STYLE="fixed_height" # or "fixed_width" or "original"
 
 post "/gif" do
@@ -15,8 +15,8 @@ post "/gif" do
   puts request["token"]
   return 401 unless request["token"] == SLACK_TOKEN
   q = request["text"]
-  return 200 unless q.start_with? TRIGGER_WORD
-  q = URI::encode q[TRIGGER_WORD.size..-1]
+  # return 200 unless q.start_with? TRIGGER_WORD
+  q = URI::encode q
   url = "http://api.giphy.com/v1/gifs/search?q=#{q}&api_key=#{GIPHY_KEY}&limit=50"
   $stderr.puts "querying giphy: #{url}"
   resp = Net::HTTP.get_response(URI.parse(url))
