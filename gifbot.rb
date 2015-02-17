@@ -18,7 +18,7 @@ post "/gif" do
   return 200 unless q.start_with? TRIGGER_WORD
   q = URI::encode q[TRIGGER_WORD.size..-1]
   url = "http://api.giphy.com/v1/gifs/search?q=#{q}&api_key=#{GIPHY_KEY}&limit=50"
-  # $stderr.puts "querying giphy: #{url}"
+  $stderr.puts "querying giphy: #{url}"
   resp = Net::HTTP.get_response(URI.parse(url))
   buffer = resp.body
   result = JSON.parse(buffer)
@@ -32,6 +32,6 @@ post "/gif" do
     text = "<" + selected[IMAGE_STYLE]["url"] + ">"
   end
   reply = {text: text}
-  puts reply
+  $stderr.puts reply
   return JSON.generate(reply)
 end
